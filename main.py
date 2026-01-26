@@ -59,3 +59,5 @@ class SandwichMachine:
            Hint: no output"""
 
 ### Make an instance of SandwichMachine class and write the rest of the codes ###
+
+print("This is another test to make sure commits are working properly")
