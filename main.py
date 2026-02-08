@@ -70,8 +70,9 @@ class SandwichMachine:
             print("Sorry, you don't have enough money to pay for this.")
             return False
         else:
-            if (cost - coins) > 0:
-                print(f"Here is ${cost - coins} in change.")
+            change = coins - cost
+            if change > 0:
+                print(f"Here is ${change:.2f} in change.")
             return True
 
     def make_sandwich(self, sandwich_size, order_ingredients):
@@ -101,7 +102,7 @@ elif sandwich_size in ["small", "medium", "large"]:
         coins = machine.process_coins()
 
         if machine.transaction_result(coins, cost):
-            machine.make_sandwich(ingredients_needed)
+            machine.make_sandwich(sandwich_size, ingredients_needed)
             print(f"{sandwich_size} sandwich is ready. Bon appetit!")
 else:
     print("Invalid input")
