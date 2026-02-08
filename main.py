@@ -84,25 +84,26 @@ class SandwichMachine:
 ### Make an instance of SandwichMachine class and write the rest of the codes ###
 machine = SandwichMachine(resources)
 
-sandwich_size = input("What would you like? (small/ medium/ large/ off/ report): ").lower()
+while True:
+    sandwich_size = input("What would you like? (small/ medium/ large/ off/ report): ").lower()
 
-if sandwich_size == "off":
-    quit()
-elif sandwich_size == "report":
-    print(f"Bread: {machine.machine_resources['bread']} slice(s)")
-    print(f"Ham: {machine.machine_resources['ham']} slice(s)")
-    print(f"Cheese: {machine.machine_resources['cheese']} ounce(s)")
-elif sandwich_size in ["small", "medium", "large"]:
-    ingredients_needed = recipes[sandwich_size]["ingredients"]
-    cost = recipes[sandwich_size]["cost"]
+    if sandwich_size == "off":
+        break
+    elif sandwich_size == "report":
+        print(f"Bread: {machine.machine_resources['bread']} slice(s)")
+        print(f"Ham: {machine.machine_resources['ham']} slice(s)")
+        print(f"Cheese: {machine.machine_resources['cheese']} ounce(s)")
+    elif sandwich_size in ["small", "medium", "large"]:
+        ingredients_needed = recipes[sandwich_size]["ingredients"]
+        cost = recipes[sandwich_size]["cost"]
 
-    if not machine.check_resources(ingredients_needed):
-        print(f"Sorry, there are insufficient ingredients.")
+        if not machine.check_resources(ingredients_needed):
+            print(f"Sorry, there are insufficient ingredients.")
+        else:
+            coins = machine.process_coins()
+
+            if machine.transaction_result(coins, cost):
+                machine.make_sandwich(sandwich_size, ingredients_needed)
+                print(f"{sandwich_size} sandwich is ready. Bon appetit!")
     else:
-        coins = machine.process_coins()
-
-        if machine.transaction_result(coins, cost):
-            machine.make_sandwich(sandwich_size, ingredients_needed)
-            print(f"{sandwich_size} sandwich is ready. Bon appetit!")
-else:
-    print("Invalid input")
+        print("Invalid input")
