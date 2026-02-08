@@ -67,7 +67,7 @@ class SandwichMachine:
         """Return True when the payment is accepted, or False if money is insufficient.
            Hint: use the output of process_coins() function for cost input"""
         if coins < cost:
-            print("Sorry, you don't have enough money to pay for this.")
+            print("Sorry that's not enough money. Money refunded.")
             return False
         else:
             change = coins - cost
@@ -88,6 +88,7 @@ while True:
     sandwich_size = input("What would you like? (small/ medium/ large/ off/ report): ").lower()
 
     if sandwich_size == "off":
+        print("Machine has been powered off.")
         break
     elif sandwich_size == "report":
         print(f"Bread: {machine.machine_resources['bread']} slice(s)")
@@ -98,7 +99,7 @@ while True:
         cost = recipes[sandwich_size]["cost"]
 
         if not machine.check_resources(ingredients_needed):
-            print(f"Sorry, there are insufficient ingredients.")
+            print(f"Sorry there is not enough ingredients.")
         else:
             coins = machine.process_coins()
 
@@ -106,4 +107,4 @@ while True:
                 machine.make_sandwich(sandwich_size, ingredients_needed)
                 print(f"{sandwich_size} sandwich is ready. Bon appetit!")
     else:
-        print("Invalid input")
+        print("Invalid input, try again.")
