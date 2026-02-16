@@ -7,6 +7,21 @@ class CheckingAccount(BankAccount):
         self._routing_number = routing_number
         self.transfer_limit = transfer_limit
 
+    def transfer(self, amount):
+        if amount > self.transfer_limit:
+            print(f"Error: Transfer limit exceeded")
+            return False
+        elif (self.current_balance - amount) < self.minimum_balance:
+            print(f"Error: Insufficient balance")
+            return False
+        elif amount <= 0:
+            print(f"Error: Invalid amount")
+            return False
+        else:
+            self.current_balance -= amount
+            print(f"Transfer complete")
+            return True
+
     def get_account_number(self):
         return self.__account_number
 
