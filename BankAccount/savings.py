@@ -7,6 +7,10 @@ class SavingsAccount(BankAccount):
         self._routing_number = routing_number
         self.interest_rate = interest_rate
 
+    def apply_interest(self):
+        self.current_balance += (self.current_balance * self.interest_rate)
+        print("Interest applied")
+
     def get_account_number(self):
         return self.__account_number
 
