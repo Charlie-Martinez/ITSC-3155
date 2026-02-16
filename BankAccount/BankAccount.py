@@ -24,14 +24,3 @@ class BankAccount:
                 f"Customer Name: {self.customer_name}\n"
                 f"Current Balance: {self.current_balance}\n"
                 f"Minimum Balance: {self.minimum_balance}\n")
-
-act1 = BankAccount("John", 100, 100)
-print(act1.print_customer_information())
-act1.deposit(100)
-print(act1.print_customer_information())
-
-act2 = BankAccount("Mary", 800, 500)
-print(act2.print_customer_information())
-act2.withdraw(0)
-act2.withdraw(1000)
-print(act2.print_customer_information())
