@@ -10,7 +10,11 @@ __pycache__/
 .venv/
 venv/
 env/
+.env
 .env/
 
 # PyCharm
 .idea/
+
+# Local config (contains sensitive data)
+config.py
