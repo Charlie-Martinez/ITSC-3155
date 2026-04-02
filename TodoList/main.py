@@ -20,6 +20,13 @@ class TodoBase(BaseModel):
     due_day: int
     due_month: str
     due_year: int
+    user_id: int
+
+class UserBase(BaseModel):
+    id: int
+    name: str
+    age: int
+    gender: str
 
 @app.post("/todos/", status_code=status.HTTP_201_CREATED)
 async def create_todo(todo: TodoBase, db: db_dependency):
@@ -53,3 +60,14 @@ async def delete_todo(todo_id: int, db: db_dependency):
     db.commit()
 
     return {"detail": "Todo deleted successfully"}
+
+@app.get("/users/", status_code=status.HTTP_200_OK, tags=["User"])
+async def get_users(db: db_dependency):
+    return db.query(models.User).all()
+
+@app.post("/users/", status_code=status.HTTP_201_CREATED, tags=["User"])
+async def create_user(user: UserBase, db: db_dependency):
+    db_user = models.User(**user.model_dump())
+    db.add(db_user)
+    db.commit()
+    return {"detail": "User created successfully"}
