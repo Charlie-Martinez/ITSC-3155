@@ -88,3 +88,25 @@ async def get_user_todo_by_month(user_name: str, month: str, db: db_dependency):
     )
 
     return db_user_todos
+
+@app.get("/user_by_todo/", status_code=status.HTTP_200_OK, tags=["User-Todo"])
+async def get_user_by_todo(todo: str, db: db_dependency):
+    db_user = (
+        db.query(models.User.name,
+                 models.Todo.due_year,
+                 models.Todo.due_month,
+                 models.Todo.due_day, )
+        .join(models.Todo)
+        .filter(models.Todo.task_body.like(f"%{todo}%"))
+        .all()
+    )
+
+    return [
+        {
+            "user_name": user.name,
+            "due_year": user.due_year,
+            "due_month": user.due_month,
+            "due_day": user.due_day,
+        }
+        for user in db_user
+    ]
