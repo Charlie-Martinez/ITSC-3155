@@ -77,3 +77,14 @@ async def create_user(user: UserBase, db: db_dependency):
 async def get_users_count(db: db_dependency):
     count_result = db.query(func.count(models.User.id)).scalar()
     return {"user_count": count_result}
+
+@app.get("/user_todo_by_month/", status_code=status.HTTP_200_OK, tags=["User-Todo"])
+async def get_user_todo_by_month(user_name: str, month: str, db: db_dependency):
+    db_user_todos = (
+        db.query(models.Todo)
+        .join(models.User)
+        .filter(models.User.name == user_name, models.Todo.due_month == month)
+        .all()
+    )
+
+    return db_user_todos
