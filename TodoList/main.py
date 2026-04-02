@@ -5,6 +5,7 @@ from typing import Annotated
 import models
 from database import engine, SessionLocal, get_db
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 
 # Initialize a new FastAPI application
 app = FastAPI()
@@ -71,3 +72,8 @@ async def create_user(user: UserBase, db: db_dependency):
     db.add(db_user)
     db.commit()
     return {"detail": "User created successfully"}
+
+@app.get("/users_count/", status_code=status.HTTP_200_OK, tags=["User"])
+async def get_users_count(db: db_dependency):
+    count_result = db.query(func.count(models.User.id)).scalar()
+    return {"user_count": count_result}
